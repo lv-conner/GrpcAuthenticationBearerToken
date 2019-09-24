@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloGrpcService", "HelloGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloGrpcServiceClient", "HelloGrpcServiceClient\HelloGrpcServiceClient.csproj", "{C14437CD-FBCF-433F-B5B3-871488B23CE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloGrpcServiceWebClient", "HelloGrpcServiceWebClient\HelloGrpcServiceWebClient.csproj", "{A1D92A66-DE28-4FA8-8D16-B19F037BF47F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloGrpcProto", "HelloGrpcClientProto\HelloGrpcProto.csproj", "{7090A546-7CBE-433C-AC07-2DED87FB5D14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C14437CD-FBCF-433F-B5B3-871488B23CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C14437CD-FBCF-433F-B5B3-871488B23CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C14437CD-FBCF-433F-B5B3-871488B23CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D92A66-DE28-4FA8-8D16-B19F037BF47F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D92A66-DE28-4FA8-8D16-B19F037BF47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D92A66-DE28-4FA8-8D16-B19F037BF47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D92A66-DE28-4FA8-8D16-B19F037BF47F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7090A546-7CBE-433C-AC07-2DED87FB5D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7090A546-7CBE-433C-AC07-2DED87FB5D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7090A546-7CBE-433C-AC07-2DED87FB5D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7090A546-7CBE-433C-AC07-2DED87FB5D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

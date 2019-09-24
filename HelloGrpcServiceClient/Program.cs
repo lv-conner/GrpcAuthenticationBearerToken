@@ -8,6 +8,7 @@ using IdentityModel.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
 
 namespace HelloGrpcServiceClient
 {
@@ -15,6 +16,11 @@ namespace HelloGrpcServiceClient
     {
         static async Task Main(string[] args)
         {
+            var actoken =await GetAccessTokenAsync();
+            Console.WriteLine(actoken);
+
+
+
             // request token
             var tokenClient = new TokenClient(new HttpClient() { BaseAddress = new Uri("http://localhost:5000/connect/token") }, new TokenClientOptions()
             {
@@ -63,6 +69,27 @@ namespace HelloGrpcServiceClient
             Console.WriteLine(helloReply.Message);
             Console.WriteLine("Hello World!");
             Console.ReadLine();
+        }
+
+        static async Task<string> GetAccessTokenAsync()
+        {
+            IServiceCollection services = new ServiceCollection();
+            services.AddHttpClient<TokenClient>(options =>
+            {
+                //options.BaseAddress = new Uri("http://localhost:5000/connect/token");
+            });
+            services.Configure<TokenClientOptions>(options =>
+            {
+                options.Address = "http://localhost:5000/connect/token";
+                options.ClientId = "client";
+                options.ClientSecret = "secret";
+            });
+            services.AddTransient(sp => sp.GetRequiredService<IOptions<TokenClientOptions>>().Value);
+            var provider = services.BuildServiceProvider();
+            var client = provider.GetService<TokenClient>();
+            var response = await client.RequestClientCredentialsTokenAsync();
+            Console.WriteLine(response.AccessToken);
+            return response.AccessToken;
         }
     }
 }
