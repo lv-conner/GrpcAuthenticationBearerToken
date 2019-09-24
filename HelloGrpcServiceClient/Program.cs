@@ -5,6 +5,9 @@ using System.Net.Http;
 using IdentityModel;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 
 namespace HelloGrpcServiceClient
 {
@@ -24,6 +27,30 @@ namespace HelloGrpcServiceClient
                 Console.WriteLine(tokenResponse.Error);
             }
             Console.WriteLine(tokenResponse.Json);
+            IServiceCollection services = new ServiceCollection();
+            services.AddGrpcClient<Greeter.GreeterClient>((ServiceProvider,options) =>
+            {
+                options.Address = new Uri("https://localhost:8888");
+                options.ChannelOptionsActions.Add(channelOptions =>
+                {
+                    channelOptions.HttpClient.SetBearerToken(GetTokenAsync(ServiceProvider).Result);
+                });
+            });
+            var provider = services.BuildServiceProvider();
+            var serviceClient = provider.GetService<Greeter.GreeterClient>();
+            var res = await serviceClient.SayHelloAsync(new HelloRequest() { Name = "tim" });
+            Console.WriteLine(res.Message);
+
+
+            static async Task<string> GetTokenAsync(IServiceProvider serviceProvider)
+            {
+                var context = serviceProvider.GetService<IHttpContextAccessor>()?.HttpContext;
+                if(context == null)
+                {
+                    throw new ArgumentNullException(nameof(HttpContext));
+                }
+                return await context.GetTokenAsync("access_token");
+            }
 
             var httpClient = new HttpClient();
             httpClient.SetBearerToken(tokenResponse.AccessToken);
